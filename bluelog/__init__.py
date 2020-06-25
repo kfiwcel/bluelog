@@ -15,10 +15,11 @@ from flask_login import current_user
 from flask_sqlalchemy import get_debug_queries
 from flask_wtf.csrf import CSRFError
 
+
 from bluelog.blueprints.admin import admin_bp
 from bluelog.blueprints.auth import auth_bp
 from bluelog.blueprints.blog import blog_bp
-from bluelog.extensions import bootstrap, db, login_manager, csrf, ckeditor, mail, moment, toolbar, migrate
+from bluelog.extensions import bootstrap, db, login_manager, csrf, mail, moment, toolbar, migrate
 from bluelog.models import Admin, Post, Category, Comment, Link
 from bluelog.settings import config
 
@@ -82,11 +83,11 @@ def register_extensions(app):
     db.init_app(app)
     login_manager.init_app(app)
     csrf.init_app(app)
-    ckeditor.init_app(app)
     mail.init_app(app)
     moment.init_app(app)
     toolbar.init_app(app)
     migrate.init_app(app, db)
+
 
 
 def register_blueprints(app):

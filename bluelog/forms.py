@@ -9,8 +9,7 @@ from flask_ckeditor import CKEditorField
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, SelectField, TextAreaField, ValidationError, HiddenField, \
     BooleanField, PasswordField
-from wtforms.validators import DataRequired, Email, Length, Optional, URL
-
+from wtforms.validators import DataRequired, Optional, URL, EqualTo, Length, Email
 from bluelog.models import Category
 
 
@@ -21,18 +20,33 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Log in')
 
 
+class Username_PasswordResetRequestForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired(), Length(1, 64),
+                                             Email()])
+    submit = SubmitField('Reset Password')
+
+
+
+class Username_PasswordResetForm(FlaskForm):
+    new_username = StringField ( 'Username' , validators=[ DataRequired () , Length ( 1 , 20 ) ] )
+    new_password = PasswordField('New Password', validators=[
+        DataRequired(), EqualTo('password2', message='Passwords must match')])
+    password2 = PasswordField('Confirm password', validators=[DataRequired()])
+    submit = SubmitField('Reset Password')
+
+
 class SettingForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired(), Length(1, 30)])
     blog_title = StringField('Blog Title', validators=[DataRequired(), Length(1, 60)])
     blog_sub_title = StringField('Blog Sub Title', validators=[DataRequired(), Length(1, 100)])
-    about = CKEditorField('About Page', validators=[DataRequired()])
+    about = TextAreaField ('About Page', id='content')
     submit = SubmitField()
 
 
 class PostForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired(), Length(1, 60)])
     category = SelectField('Category', coerce=int, default=1)
-    body = CKEditorField('Body', validators=[DataRequired()])
+    body = TextAreaField ('Body', id='content' )
     submit = SubmitField()
 
     def __init__(self, *args, **kwargs):

@@ -16,8 +16,8 @@ from bluelog.utils import redirect_back
 
 blog_bp = Blueprint('blog', __name__)
 
-
 @blog_bp.route('/')
+@blog_bp.route('/index')
 def index():
     page = request.args.get('page', 1, type=int)
     per_page = current_app.config['BLUELOG_POST_PER_PAGE']
