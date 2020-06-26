@@ -43,7 +43,8 @@ class SettingForm(FlaskForm):
         validators=[DataRequired('Please select a style')],
         render_kw={ 'class': 'form-control'},
         choices=[('default', 'Default'), ('dark', 'Dark'), ('okaidia', 'Okaidia'), ('funkv', 'Funkv'), ('twilight', 'Twilight'),
-                 ('cov', 'Cov'),('tomorrow_night', 'Tomorrow Night'), ('solarized_light', 'Solarized Light')],coerce = str)
+                 ('cov', 'Cov'),('tomorrow_night', 'Tomorrow Night'), ('solarized_light', 'Solarized Light')],
+                                        default = 'default',coerce = str)
 
 
     about = TextAreaField ('About Page', id='content')
