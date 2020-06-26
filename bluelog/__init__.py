@@ -173,6 +173,7 @@ def register_commands(app):
                 blog_title='Bluelog',
                 blog_sub_title="No, I'm the real thing.",
                 name='Admin',
+                code_highlight_style='default' ,
                 about='Anything about you.'
             )
             admin.set_password(password)
