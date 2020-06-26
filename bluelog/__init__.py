@@ -24,10 +24,10 @@ from bluelog.models import Admin, Post, Category, Comment, Link
 from bluelog.settings import config
 
 
-from flask_sslify import SSLify
+
 
 basedir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
-sslify = SSLify()
+
 
 def create_app(config_name=None):
     if config_name is None:
@@ -91,7 +91,6 @@ def register_extensions(app):
     toolbar.init_app(app)
     migrate.init_app(app, db)
 
-    sslify.init_app ( app )
 
 
 
