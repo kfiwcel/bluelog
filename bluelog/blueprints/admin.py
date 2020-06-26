@@ -27,6 +27,7 @@ def settings () :
         current_user.name = form.name.data
         current_user.blog_title = form.blog_title.data
         current_user.blog_sub_title = form.blog_sub_title.data
+        current_user.code_highlight_style = form.code_highlight_style.data
         current_user.about = form.about.data
         db.session.commit ()
         flash ( 'Setting updated.' , 'success' )
@@ -35,6 +36,7 @@ def settings () :
     form.blog_title.data = current_user.blog_title
     form.blog_sub_title.data = current_user.blog_sub_title
     form.about.data = current_user.about
+    form.code_highlight_style.data = current_user.code_highlight_style
     return render_template ( 'admin/settings.html' , form=form )
 
 

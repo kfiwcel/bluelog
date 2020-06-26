@@ -50,7 +50,9 @@ tinymce.init({
         {text: 'PHP', value: 'php'},
         {text: 'Python', value: 'python'},
     ],
-    codesample_content_css: '/static/prism.css',
+
+    codesample_content_css: 'static/prism/prism_default.csss',
+
 
 
     imgUpload (blobInfo, success, failure) {

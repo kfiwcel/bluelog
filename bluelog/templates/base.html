@@ -12,7 +12,7 @@
               type="text/css">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
 
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='prism.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='prism/prism_'+admin.code_highlight_style+'.css') }}">
     {% endblock head %}
 </head>
 <body>
@@ -106,16 +106,17 @@
 
 {% block scripts %}
     <!--代码高亮-->
-    <script src="{{ url_for('static', filename='prism.js') }}"></script>
+    <script src="{{ url_for('static', filename='prism/prism_'+admin.code_highlight_style+'.js') }}"></script>
     <!--tinymce编辑器-->
     <script src="{{ url_for('static', filename='tinymce/js/tinymce/tinymce.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/tinymce_setup.js') }}"></script>
-
+    <script src="{{ url_for('static', filename='dist/clipboard.min.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-3.2.1.slim.min.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/script.js') }}"></script>
     {{ moment.include_moment(local_js=url_for('static', filename='js/moment-with-locales.min.js')) }}
+
 {% endblock %}
 </body>
 </html>

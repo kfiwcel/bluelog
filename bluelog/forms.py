@@ -39,8 +39,16 @@ class SettingForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired(), Length(1, 30)])
     blog_title = StringField('Blog Title', validators=[DataRequired(), Length(1, 60)])
     blog_sub_title = StringField('Blog Sub Title', validators=[DataRequired(), Length(1, 100)])
+    code_highlight_style= SelectField ( label='Code highlight style',
+        validators=[DataRequired('Please select a style')],
+        render_kw={ 'class': 'form-control'},
+        choices=[('default', 'Default'), ('dark', 'Dark'), ('okaidia', 'Okaidia'), ('funkv', 'Funkv'), ('twilight', 'Twilight'),
+                 ('cov', 'Cov'),('tomorrow_night', 'Tomorrow Night'), ('solarized_light', 'Solarized Light')],coerce = str)
+
+
     about = TextAreaField ('About Page', id='content')
     submit = SubmitField()
+
 
 
 class PostForm(FlaskForm):

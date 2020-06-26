@@ -33,6 +33,13 @@
             <hr>
             <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target=".postLinkModal">Share
             </button>
+            <button class="btn btn-primary btn-sm" data-clipboard-text="{{ post.body }}" data-container="body" data-toggle="popover" data-placement="top"
+            data-content="复制成功" data-delay="100">Copy</button>
+
+
+            <button type="button" class="btn btn-primary btn-sm" id="_comment">Comment</button>
+
+
             <div class="modal fade postLinkModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
                  aria-hidden="true">
                 <div class="modal-dialog">
@@ -53,7 +60,17 @@
                 </div>
             </div>
             <div class="comments" id="comments">
-                <h3>{{ pagination.total }} Comments
+
+
+
+
+
+
+                <h3 id="tatal-comment"><a href="#" >{{ pagination.total }} Comments</a>
+
+
+
+
                     <small>
                         <a href="{{ url_for('.show_post', post_id=post.id, page=pagination.pages or 1) }}#comments">
                             latest</a>
@@ -68,6 +85,17 @@
                         </form>
                     {% endif %}
                 </h3>
+
+                <!--发表评论-->
+                {% if post.can_comment %}
+                    <div id="comment-form">
+                        {{ render_form(form, action=request.full_path) }}
+                    </div>
+                {% else %}
+                    <div class="tip"><h5>Comment disabled.</h5></div>
+                {% endif %}<br>
+
+
                 {% if comments %}
                     <ul class="list-group">
                         {% for comment in comments %}
@@ -114,12 +142,14 @@
                             </li>
                         {% endfor %}
                     </ul>
-                {% else %}
-                    <div class="tip"><h5>No comments.</h5></div>
+
                 {% endif %}
             </div>
+
             {% if comments %}
                 {{ render_pagination(pagination, fragment='#comments') }}
+            {% else %}
+
             {% endif %}
             {% if request.args.get('reply') %}
                 <div class="alert alert-dark">
@@ -127,16 +157,39 @@
                     <a class="float-right" href="{{ url_for('.show_post', post_id=post.id) }}">Cancel</a>
                 </div>
             {% endif %}
-            {% if post.can_comment %}
-                <div id="comment-form">
-                    {{ render_form(form, action=request.full_path) }}
-                </div>
-            {% else %}
-                <div class="tip"><h5>Comment disabled.</h5></div>
-            {% endif %}
+
         </div>
         <div class="col-sm-4 sidebar">
             {% include "blog/_sidebar.html" %}
         </div>
     </div>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script>
+        var clipboard = new ClipboardJS('.btn');
+        clipboard.on('success', function(e) {
+            console.log(e);
+        });
+        clipboard.on('error', function(e) {
+            console.log(e);
+        });
+
+        $(document).ready(function(){
+            $("#tatal-comment").click(function(){
+                $(".list-group").toggle();
+            });
+        });
+        $(document).ready(function(){
+            $("#_comment").click(function(){
+                $("#comment-form").toggle();
+            });
+        });
+
+        $(function (){
+            $("[data-toggle='popover']").popover();
+        });
+
+    </script>
 {% endblock %}

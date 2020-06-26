@@ -22,6 +22,9 @@ class Admin(db.Model, UserMixin):
     name = db.Column(db.String(30))
     about = db.Column(db.Text)
 
+    code_highlight_style = db.Column(db.String(60))
+
+
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
 
