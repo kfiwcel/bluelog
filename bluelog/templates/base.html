@@ -12,7 +12,7 @@
               type="text/css">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
 
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='prism/prism_'+admin.code_highlight_style+'.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='prism/prism_'+admin.code_highlight_style|default('default')+'.css') }}">
     {% endblock head %}
 </head>
 <body>
@@ -106,7 +106,7 @@
 
 {% block scripts %}
     <!--代码高亮-->
-    <script src="{{ url_for('static', filename='prism/prism_'+admin.code_highlight_style+'.js') }}"></script>
+    <script src="{{ url_for('static', filename='prism/prism_'+admin.code_highlight_style|default('default')+'.js') }}"></script>
     <!--tinymce编辑器-->
     <script src="{{ url_for('static', filename='tinymce/js/tinymce/tinymce.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/tinymce_setup.js') }}"></script>
