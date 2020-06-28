@@ -42,9 +42,10 @@ class SettingForm(FlaskForm):
     code_highlight_style= SelectField ( label='Code highlight style',
         validators=[DataRequired('Please select a style')],
         render_kw={ 'class': 'form-control'},
-        choices=[('default', 'Default'), ('dark', 'Dark'), ('okaidia', 'Okaidia'), ('funkv', 'Funkv'), ('twilight', 'Twilight'),
-                 ('cov', 'Cov'),('tomorrow_night', 'Tomorrow Night'), ('solarized_light', 'Solarized Light')],
-                                        default = 'default',coerce = str)
+        choices=[('prism/prism_default', 'Default'), ('prism/prism_dark', 'Dark'), ('prism/prism_okaidia', 'Okaidia'),
+                 ('prism/prism_funkv', 'Funkv'), ('prism/prism_twilight', 'prism/prism_Twilight'),
+                 ('prism/prism_cov', 'Cov'),('prism/prism_tomorrow_night', 'prism/prism_Tomorrow Night'), ('prism/prism_solarized_light', 'Solarized Light')],
+                                        default = 'prism/prism_default',coerce = str)
 
 
     about = TextAreaField ('About Page', id='content')
