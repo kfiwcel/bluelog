@@ -22,7 +22,7 @@ def fake_admin():
         blog_title='Bluelog',
         blog_sub_title="No, I'm the real thing.",
         name='Mima Kirigoe',
-        code_highlight_style='default',
+        code_highlight_style='prism/prism_default',
         about='Um, l, Mima Kirigoe, had a fun time as a member of CHAM...'
     )
     admin.set_password('helloflask')
