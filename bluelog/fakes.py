@@ -68,6 +68,7 @@ def fake_comments(count=500):
             post=Post.query.get(random.randint(1, Post.query.count()))
         )
         db.session.add(comment)
+        db.session.commit ()
 
     salt = int(count * 0.1)
     for i in range(salt):
@@ -82,6 +83,7 @@ def fake_comments(count=500):
             post=Post.query.get(random.randint(1, Post.query.count()))
         )
         db.session.add(comment)
+        db.session.commit ()
 
         # from admin
         comment = Comment(

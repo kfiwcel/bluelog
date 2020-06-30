@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 {% from 'bootstrap/form.html' import render_form %}
 {% from 'bootstrap/pagination.html' import render_pagination %}
+
 {% block title %}{{ post.title }}{% endblock %}
+
 {% block content %}
     <div class="page-header">
         <h1>{{ post.title }}
@@ -34,11 +36,19 @@
             <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target=".postLinkModal">Share
             </button>
             <button class="btn btn-primary btn-sm" data-clipboard-text="{{ post.body }}" data-container="body" data-toggle="popover" data-placement="top"
-            data-content="复制成功" data-delay="100">Copy</button>
+                    data-content="复制成功" data-delay="100">Copy</button>
+            <button type="button" class="btn btn-primary btn-sm" id="_comment">Comment</button><br><br>
 
-
-            <button type="button" class="btn btn-primary btn-sm" id="_comment">Comment</button>
-
+            <!--发表回复-->
+            {% if request.args.get('reply') %}
+                <div class="alert alert-dark">
+                    Reply to <strong>{{ request.args.get('author') }}</strong>:{{ request.args.get('comment_body')|striptags|truncate }}
+                    <a class="float-right" href="{{ url_for('.show_post', post_id=post.id) }}">Cancel</a>
+                </div>
+                <div id="reply-form">
+                    {{ render_form(form, action=request.full_path) }}
+                </div>
+            {% endif %}
 
             <div class="modal fade postLinkModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
                  aria-hidden="true">
@@ -60,17 +70,7 @@
                 </div>
             </div>
             <div class="comments" id="comments">
-
-
-
-
-
-
                 <h3 id="tatal-comment"><a href="#" >{{ pagination.total }} Comments</a>
-
-
-
-
                     <small>
                         <a href="{{ url_for('.show_post', post_id=post.id, page=pagination.pages or 1) }}#comments">
                             latest</a>
@@ -95,7 +95,7 @@
                     <div class="tip"><h5>Comment disabled.</h5></div>
                 {% endif %}<br>
 
-
+                 <!--评论列表-->
                 {% if comments %}
                     <ul class="list-group">
                         {% for comment in comments %}
@@ -119,14 +119,19 @@
                                         {{ moment(comment.timestamp).fromNow() }}
                                     </small>
                                 </div>
+
+                                <!--回复列表-->
                                 {% if comment.replied %}
-                                    <p class="alert alert-dark reply-body">{{ comment.replied.author }}:
-                                        <br>{{ comment.replied.body }}
-                                    </p>
+                                    <div class="alert alert-dark reply-body">{{ comment.replied.author }}:
+                                        <br>{{ comment.replied.body|safe }}
+                                    </div>
                                 {%- endif -%}
-                                <p class="mb-1">{{ comment.body }}</p>
+
+                                <!--显示评论-->
+                                <p class="mb-1">{{ comment.body | safe }}</p>
+
                                 <div class="float-right">
-                                    <a class="btn btn-light btn-sm"
+                                    <a id="_reply" class="btn btn-light btn-sm"
                                        href="{{ url_for('.reply_comment', comment_id=comment.id) }}">Reply</a>
                                     {% if current_user.is_authenticated %}
                                         <a class="btn btn-light btn-sm" href="mailto:{{ comment.email }}">Email</a>
@@ -142,22 +147,13 @@
                             </li>
                         {% endfor %}
                     </ul>
-
+                {% else %}
+                    <div class="tip"><h5>No comments.</h5></div>
                 {% endif %}
             </div>
-
             {% if comments %}
                 {{ render_pagination(pagination, fragment='#comments') }}
-            {% else %}
-
             {% endif %}
-            {% if request.args.get('reply') %}
-                <div class="alert alert-dark">
-                    Reply to <strong>{{ request.args.get('author') }}</strong>:
-                    <a class="float-right" href="{{ url_for('.show_post', post_id=post.id) }}">Cancel</a>
-                </div>
-            {% endif %}
-
         </div>
         <div class="col-sm-4 sidebar">
             {% include "blog/_sidebar.html" %}
@@ -165,6 +161,7 @@
     </div>
 {% endblock %}
 
+<!--Stripts-->
 {% block scripts %}
     {{ super() }}
     <script>
@@ -175,7 +172,6 @@
         clipboard.on('error', function(e) {
             console.log(e);
         });
-
         $(document).ready(function(){
             $("#tatal-comment").click(function(){
                 $(".list-group").toggle();
@@ -186,10 +182,8 @@
                 $("#comment-form").toggle();
             });
         });
-
         $(function (){
             $("[data-toggle='popover']").popover();
         });
-
     </script>
 {% endblock %}

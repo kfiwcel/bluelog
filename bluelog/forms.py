@@ -78,11 +78,12 @@ class CommentForm(FlaskForm):
     author = StringField('Name', validators=[DataRequired(), Length(1, 30)])
     email = StringField('Email', validators=[DataRequired(), Email(), Length(1, 254)])
     site = StringField('Site', validators=[Optional(), URL(), Length(0, 255)])
-    body = TextAreaField('Comment', validators=[DataRequired()])
+    body = TextAreaField ('Body', id='content' )
     submit = SubmitField()
 
-
 class AdminCommentForm(CommentForm):
+    body = TextAreaField ( '' , id='content' )
+    submit = SubmitField ()
     author = HiddenField()
     email = HiddenField()
     site = HiddenField()
