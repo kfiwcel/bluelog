@@ -105,15 +105,15 @@
 </main>
 
 {% block scripts %}
-    <!--代码高亮-->
+ <!--代码高亮-->
     <script src="{{ url_for('static', filename=admin.code_highlight_style+'.js') }}"></script>
     <!--tinymce编辑器-->
     <script src="{{ url_for('static', filename='tinymce/js/tinymce/tinymce.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/tinymce_setup.js') }}"></script>
-    <script src="{{ url_for('static', filename='dist/clipboard.min.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-3.2.1.slim.min.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='dist/clipboard.min.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/script.js') }}"></script>
     {{ moment.include_moment(local_js=url_for('static', filename='js/moment-with-locales.min.js')) }}
 
