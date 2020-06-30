@@ -43,8 +43,8 @@ class SettingForm(FlaskForm):
         validators=[DataRequired('Please select a style')],
         render_kw={ 'class': 'form-control'},
         choices=[('prism/prism_default', 'Default'), ('prism/prism_dark', 'Dark'), ('prism/prism_okaidia', 'Okaidia'),
-                 ('prism/prism_funkv', 'Funkv'), ('prism/prism_twilight', 'prism/prism_Twilight'),
-                 ('prism/prism_cov', 'Cov'),('prism/prism_tomorrow_night', 'prism/prism_Tomorrow Night'), ('prism/prism_solarized_light', 'Solarized Light')],
+                 ('prism/prism_funkv', 'Funkv'), ('prism/prism_twilight', 'prism_Twilight'),
+                 ('prism/prism_cov', 'Cov'),('prism/prism_tomorrow_night', 'prism_Tomorrow Night'), ('prism/prism_solarized_light', 'Solarized Light')],
                                         default = 'prism/prism_default',coerce = str)
 
 
