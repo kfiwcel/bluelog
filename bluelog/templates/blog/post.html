@@ -35,9 +35,11 @@
             <hr>
             <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target=".postLinkModal">Share
             </button>
-            <button class="btn btn-primary btn-sm" data-clipboard-text="{{ post.body }}" data-container="body" data-toggle="popover" data-placement="top"
+            <button class="btn btn-primary btn-sm" data-clipboard-text="{{ post.body
+
+                    }}" data-container="body" data-toggle="popover" data-placement="top"
                     data-content="复制成功" data-delay="100">Copy</button>
-            <button type="button" class="btn btn-primary btn-sm" id="_comment">Comment</button><br><br>
+            
 
             <!--发表回复-->
             {% if request.args.get('reply') %}
@@ -87,15 +89,16 @@
                 </h3>
 
                 <!--发表评论-->
-                {% if post.can_comment %}
-                    <div id="comment-form">
-                        {{ render_form(form, action=request.full_path) }}
-                    </div>
-                {% else %}
-                    <div class="tip"><h5>Comment disabled.</h5></div>
-                {% endif %}<br>
-
-                 <!--评论列表-->
+                <details><summary>Comment</summary>
+                    {% if post.can_comment %}
+                        <div id="comment-form">
+                            {{ render_form(form, action=request.full_path) }}
+                        </div>
+                    {% else %}
+                        <div class="tip"><h5>Comment disabled.</h5></div>
+                    {% endif %}<br>
+                </details>
+                <!--评论列表-->
                 {% if comments %}
                     <ul class="list-group">
                         {% for comment in comments %}
@@ -172,18 +175,6 @@
         clipboard.on('error', function(e) {
             console.log(e);
         });
-        $(document).ready(function(){
-            $("#tatal-comment").click(function(){
-                $(".list-group").toggle();
-            });
-        });
-        $(document).ready(function(){
-            $("#_comment").click(function(){
-                $("#comment-form").toggle();
-            });
-        });
-        $(function (){
-            $("[data-toggle='popover']").popover();
-        });
+
     </script>
 {% endblock %}
