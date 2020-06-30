@@ -87,18 +87,17 @@
                         </form>
                     {% endif %}
                 </h3>
-                
-                
-                {% if post.can_comment %}
-                    <div id="comment-form">
-                        {{ render_form(form, action=request.full_path) }}
-                    </div>
-                {% else %}
-                    <div class="tip"><h5>Comment disabled.</h5></div>
-                {% endif %}<br>
-               
-
-                 <!--评论列表-->
+                <details><summary>Comment</summary>
+                    <!--发表评论-->
+                    {% if post.can_comment %}
+                        <div id="comment-form">
+                            {{ render_form(form, action=request.full_path) }}
+                        </div>
+                    {% else %}
+                        <div class="tip"><h5>Comment disabled.</h5></div>
+                    {% endif %}<br>
+                </details>
+                <!--评论列表-->
                 {% if comments %}
                     <ul class="list-group">
                         {% for comment in comments %}
@@ -167,26 +166,5 @@
 <!--Stripts-->
 {% block scripts %}
     {{ super() }}
-    <script>
-        var clipboard = new ClipboardJS('.btn');
-        clipboard.on('success', function(e) {
-            console.log(e);
-        });
-        clipboard.on('error', function(e) {
-            console.log(e);
-        });
-        $(document).ready(function(){
-            $("#tatal-comment").click(function(){
-                $(".list-group").toggle();
-            });
-        });
-        $(document).ready(function(){
-            $("#_comment").click(function(){
-                $("#comment-form").toggle();
-            });
-        });
-        $(function (){
-            $("[data-toggle='popover']").popover();
-        });
-    </script>
+
 {% endblock %}
