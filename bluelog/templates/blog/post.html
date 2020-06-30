@@ -165,5 +165,27 @@
 <!--Stripts-->
 {% block scripts %}
     {{ super() }}
+<script>
+        var clipboard = new ClipboardJS('.btn');
+        clipboard.on('success', function(e) {
+            console.log(e);
+        });
+        clipboard.on('error', function(e) {
+            console.log(e);
+        });
+        $(document).ready(function(){
+            $("#tatal-comment").click(function(){
+                $(".list-group").toggle();
+            });
+        });
+        $(document).ready(function(){
+            $("#_comment").click(function(){
+                $("#comment-form").toggle();
+            });
+        });
+        $(function (){
+            $("[data-toggle='popover']").popover();
+        });
+    </script>
 
 {% endblock %}
